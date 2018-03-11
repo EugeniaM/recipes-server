@@ -1,0 +1,672 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Swagger Recipes App",
+    "version": "1.0.0",
+    "title": "Recipes App"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "recipes",
+      "description": "Operations with Recipes"
+    },
+    {
+      "name": "categories",
+      "description": "Operations with Categories"
+    },
+    {
+      "name": "favorites",
+      "description": "Operations with favorites"
+    },
+    {
+      "name": "purchases",
+      "description": "Operations with Purchase"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/recipes": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Get all recipes",
+        "description": "Returns a list containing all recipes",
+        "responses": {
+          "200": {
+            "description": "A list of Recipe",
+            "schema": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "categoryId",
+                  "description",
+                  "id",
+                  "ingredients",
+                  "instructions",
+                  "likes",
+                  "photoUrl",
+                  "title",
+                  "isFavorite"
+                ],
+                "properties": {
+                  "categoryId": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "ingredients": {
+                    "type": "array"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  },
+                  "likes": {
+                    "type": "number"
+                  },
+                  "photoUrl": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "isFavorite": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Add a new Recipe",
+        "description": "Returns id of newly created Recipe",
+        "parameters": [
+          {
+            "name": "recipe",
+            "in": "body",
+            "description": "The recipe to create.",
+            "schema": {
+              "required": [
+                "title",
+                "description",
+                "photoUrl",
+                "instructions",
+                "categoryId",
+                "ingredients"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "photoUrl": {
+                  "type": "string"
+                },
+                "instructions": {
+                  "type": "string"
+                },
+                "categoryId": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe succesfully created."
+          },
+          "404": {
+            "description": "Recipe couldn't have been created."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Edit Recipe",
+        "parameters": [
+          {
+            "name": "recipe",
+            "in": "body",
+            "description": "The recipe to edit.",
+            "schema": {
+              "required": [
+                "title",
+                "description",
+                "photoUrl",
+                "instructions",
+                "categoryId",
+                "ingredients",
+                "id"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "photoUrl": {
+                  "type": "string"
+                },
+                "instructions": {
+                  "type": "string"
+                },
+                "categoryId": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe succesfully edited."
+          },
+          "404": {
+            "description": "Recipe couldn't have been edited."
+          }
+        }
+      }
+    },
+    "/recipes/{id}": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Get a Recipe",
+        "description": "Returns a single Recipe for its id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The recipe's id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single Recipe",
+            "schema": {
+              "required": [
+                "categoryId",
+                "description",
+                "id",
+                "ingredients",
+                "instructions",
+                "likes",
+                "photoUrl",
+                "title",
+                "category",
+                "isFavorite"
+              ],
+              "properties": {
+                "categoryId": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "array"
+                },
+                "instructions": {
+                  "type": "string"
+                },
+                "likes": {
+                  "type": "number"
+                },
+                "photoUrl": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "isFavorite": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The Recipe does not exists."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Delete Recipe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The recipe's id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/recipes/likes": {
+      "post": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Add likes to recipe",
+        "description": "Increments property 'likes' in Recipe",
+        "parameters": [
+          {
+            "name": "recipe",
+            "in": "body",
+            "description": "The recipe to like.",
+            "schema": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "required": [
+                "categoryId",
+                "description",
+                "id",
+                "ingredients",
+                "instructions",
+                "likes",
+                "photoUrl",
+                "title"
+              ],
+              "properties": {
+                "categoryId": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "array"
+                },
+                "instructions": {
+                  "type": "string"
+                },
+                "likes": {
+                  "type": "number"
+                },
+                "photoUrl": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe wasn't liked."
+          }
+        }
+      }
+    },
+    "/recipes/dislikes": {
+      "post": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Subtract likes from recipe",
+        "description": "Decrements property 'likes' in Recipe",
+        "parameters": [
+          {
+            "name": "recipe",
+            "in": "body",
+            "description": "The recipe to dislike.",
+            "schema": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "required": [
+                "categoryId",
+                "description",
+                "id",
+                "ingredients",
+                "instructions",
+                "likes",
+                "photoUrl",
+                "title"
+              ],
+              "properties": {
+                "categoryId": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "array"
+                },
+                "instructions": {
+                  "type": "string"
+                },
+                "likes": {
+                  "type": "number"
+                },
+                "photoUrl": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe wasn't disliked."
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "Get all categories",
+        "description": "Returns a list containing all categories",
+        "responses": {
+          "200": {
+            "description": "A list of Category",
+            "schema": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "id",
+                  "name"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/favorites": {
+      "get": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Get all favorites",
+        "description": "Returns a list containing all favorites",
+        "responses": {
+          "200": {
+            "description": "A list of Recipe (favorites)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "categoryId",
+                  "description",
+                  "id",
+                  "ingredients",
+                  "instructions",
+                  "likes",
+                  "photoUrl",
+                  "title"
+                ],
+                "properties": {
+                  "categoryId": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "ingredients": {
+                    "type": "array"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  },
+                  "likes": {
+                    "type": "number"
+                  },
+                  "photoUrl": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Add Recipe to Favorites",
+        "description": "Returns id of the Recipe added to favorites",
+        "parameters": [
+          {
+            "name": "favorites",
+            "in": "body",
+            "description": "The id of recipe to add to favorites.",
+            "schema": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe succesfully added to favorites."
+          },
+          "404": {
+            "description": "Recipe couldn't have been added to favorites."
+          }
+        }
+      }
+    },
+    "/favorites/{id}": {
+      "delete": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Delete Recipe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The recipe's id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Could not remove from favorites."
+          }
+        }
+      }
+    },
+    "/purchases": {
+      "get": {
+        "tags": [
+          "purchases"
+        ],
+        "summary": "Get all purchases",
+        "description": "Returns a list containing all purchases",
+        "responses": {
+          "200": {
+            "description": "A list of Purchases",
+            "schema": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "id",
+                  "purchase"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "purchase": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "purchases"
+        ],
+        "summary": "Add ingredient(s) to Purchases",
+        "description": "Returns the list of all purchases",
+        "parameters": [
+          {
+            "name": "purchase",
+            "in": "body",
+            "description": "A single or a list of purchases",
+            "schema": {
+              "required": [
+                "purchases"
+              ],
+              "properties": {
+                "purchases": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe succesfully added to favorites."
+          },
+          "404": {
+            "description": "Recipe couldn't have been added to favorites."
+          }
+        }
+      }
+    },
+    "/purchases/{id}": {
+      "delete": {
+        "tags": [
+          "purchases"
+        ],
+        "summary": "Delete purchase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The purchase's id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Could not remove from favorites."
+          }
+        }
+      }
+    }
+  }
+}
